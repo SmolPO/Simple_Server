@@ -21,8 +21,8 @@ from collections import namedtuple, deque
 import Commands as CMD
 
 # типы пользователей
-PP = 'pp'
-CLIENT = 'clients'
+PP = 2
+CLIENT = 1
 
 # размеры полей в байтах
 SIZE_FIELD     = 4 # универсальный размер поля для всех полей
@@ -65,30 +65,43 @@ ERR_     = 3
 PORT = 27000
 server_address = 'localhost'
 MAX_CONNECT = 10
-BUFFER_SIZE = 30
 
 # кодировка сообщений
 TYPE_CODING = dict(utf_8='utf-8', ackii='ackii')
 
 # для очереди
-queue_name = "Global_Queue"
+localhost = 'localhost'
+address_rbbmq = 'localhost'
+glob_queue_name = "Global_Queue"
 queue_addr = 'localhost'
 
+# точки обмена
+exchange_cl = 'clients'
+exchange_pp = 'pp'
+
 log_queue_name = "Log_Queue"
-log_queue_addr = 'localhost'
 
-key_recv   = "key_recv"
-key_send   = "key_send"
-password   = "6EQUJ511_1"
+# для базы данных #
+# базы данных
+postgresql_data_base = "LC"
 
-# для базы данных
-DB_DEVICE = namedtuple("DATa_BASE_DEVICES", ['name', 'address', 'user', 'password', 'fields'])
-db = DB_DEVICE('LC_device', 'localhost', 'LC', '12345', ['id', 'type', 'permissions'])
+user = "postgres"
+password_for_DB = "6EQUJ511_1"
+address_db = 'localhost'
 
-ntuple_db_device = namedtuple("db_device_", ['id','type', 'rights'])
-ntuple_db_operation = namedtuple("db_operation_", ['id','sender', 'reciver', 'status'])
+# подключение к базе данных
+DATA_BASE = namedtuple("DATA_BASE_DEVICES", ['name', 'address', 'user', 'password', 'fields'])
+
+# поля базы данных
+FL_LOG_DB = namedtuple("DATA_BASE_LOG", ['sender', 'msg', 'date'])
+FL_DEVICES_DB = namedtuple("DEVICES_LOG", ['id', 'type', 'position'])
+FL_OPERATION_DB = namedtuple("OPERATIONS_DB", ['msg','verify','date'])
+
+_log_db_  = DATA_BASE('log_db',       address_db, user, password_for_DB, ['sender', 'msg', 'date' ])
+_dvcs_db_ = DATA_BASE('devices_db',   address_db, user, password_for_DB, ['id', 'type', 'position'])
+_op_db_   = DATA_BASE('operation_db', address_db, user, password_for_DB, ['msg','verify','date'   ])
+
 STATUS = {'ok':0, 'waiting':1, 'not_answer':2}
-user = 'LC'
 
 def to_bytes_from_data_message(data, size_field=4, end_symbol ='0', charset="utf-8", more=False):
     """

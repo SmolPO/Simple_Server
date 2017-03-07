@@ -3,6 +3,8 @@
 import socket
 from collections import namedtuple
 from itertools import count
+BUFFER_SIZE = 30
+password = '1'
 
 import Configurate as cnf
 from configurate import Commands as CMD
@@ -10,7 +12,7 @@ from configurate import Commands as CMD
 def authentication(sock):
     if not sock.send(cnf.password):
          return False
-    data = sock.recv(cnf.BUFFER_SIZE)
+    data = sock.recv(BUFFER_SIZE)
     if not data:
 
         return False

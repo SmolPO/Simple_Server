@@ -12,7 +12,7 @@ from collections import namedtuple
 import pika
 
 import GlobalQueue as glb_queue
-from GlobalQueue import init_queue
+from GlobalQueue import create_queue
 import Configurate as cnf # экземпляр класса Config
 
 
@@ -171,7 +171,7 @@ class Recv_Handler(Thread):
 
     def _close_session(self):
         print (str(self.handler.connect.list_handler))
-        self.handler.connect.list_handler.pop(self.handler)
+        self.handler.connect.list_handler.pop(self.handler) # TODO как остановить себя?
         self.handler.send_heandler.close_session()
         self.sock.close()
 

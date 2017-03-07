@@ -85,7 +85,7 @@ class Send_Handler(Thread):
         """
         return 'client_' + str(next(id_queue))
 
-    # def _connect_queue_to_exchage(self, queue_name):
+    # def _connect_queue_to_exchage(self, glob_queue_name):
     #     self.self_queue.chanl.queue_bind(self.self_queue.name, "clients") #self.type_handler)
     #     return
 
