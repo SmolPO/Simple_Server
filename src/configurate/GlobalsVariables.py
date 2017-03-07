@@ -24,3 +24,4 @@ class Global_variables:
         return self.__PORT__
 
 global_data = Global_variables()
+

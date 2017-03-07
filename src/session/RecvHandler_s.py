@@ -120,7 +120,7 @@ class Recv_Handler(Thread):
         return True
 
     def run(self):
-
+        print (cnf.address_db)
         sending_to_queue = glb_queue.g_to_main_exchange()
         sending_to_queue.next()
 

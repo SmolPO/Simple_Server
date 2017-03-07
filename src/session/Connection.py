@@ -28,10 +28,9 @@ class Connect(Thread):
         self.id_PP = count()
 
     def run(self):
-
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            self.sock.bind(('', cnf.PORT))
+            self.sock.bind(('', cnf.PORT + 1))
             self.sock.listen(cnf.MAX_CONNECT)
         except:
             print ("connect except...")

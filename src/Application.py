@@ -1,8 +1,8 @@
 # coding=utf-8
 from threading import Thread
 
-from Connection import Connect as Conn
-from GlobalQueue import Server_Thread as svr_thread
+from Connection import Connect
+from GlobalQueue import Server_Thread
 # TODO убрать import * или import as , заменить на полный импорт
 
 class Application(Thread):
@@ -16,8 +16,8 @@ class Application(Thread):
         """
         Thread.__init__(self)
 
-        self.connect_class = Conn(self)
-        self.server_thread = svr_thread()
+        self.connect_class = Connect(self)
+        self.server_thread = Server_Thread()
 
     def run(self):
         self.server_thread.start()

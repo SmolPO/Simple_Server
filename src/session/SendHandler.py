@@ -42,16 +42,12 @@ class Send_Handler(Thread):
             queue='client_0',
             no_ack=True
         )
-        l = dir(self.channel)
-        for i in l:
-            print i
 
     def run(self):
         self.channel.start_consuming()
         print ("stop consumer")
         # создать очереди и привязать ее к точке обмена
         pass
-
 
     def send_mess(self, mess):
         """

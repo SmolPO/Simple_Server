@@ -1,7 +1,7 @@
 # coding=utf-8
 from threading import Thread
 import pika
-from RecvHandler import Recv_Handler
+from RecvHandler_s import Recv_Handler
 from SendHandler import Send_Handler
 
 import Configurate as cnf
@@ -21,6 +21,7 @@ class Handler(Thread):
 
     def __init__(self, class_connect, socket, type_, index_handler):
         Thread.__init__(self)
+        print (cnf.address_db)
         self.connect = class_connect
         self.socket = socket
         self.type_ = type_

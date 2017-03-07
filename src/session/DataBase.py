@@ -15,10 +15,6 @@ class Data_Bases:
 
     def __init__(self):
         self.init_postgressql()
-        return
-        self.init_devices_DB()
-        self.init_log_DB()
-        self.init_operations_DB()
         pass
 
     def init_postgressql(self):
@@ -41,7 +37,7 @@ class Data_Bases:
 
     def to_devices_DB(self, msg):
         """
-
+        добавить в базу данных
         :param msg: (id_device, type, location)
         :return:
         """
@@ -65,7 +61,12 @@ class Data_Bases:
     def add_to_datebases(self, body):
         """
         проанализировать сообщение и определить в какие базы его нужно добавить
+        1) определить, сообщение - ответ или это новая команда
+            ответ - найти в базе, изменить статус
+            новая команда - добавить
+        2) определить куда добавлять
         :return:
         """
+
         pass
 
