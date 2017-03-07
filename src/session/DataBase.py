@@ -2,7 +2,7 @@
 from threading import Thread
 import psycopg2
 import Configurate as cnf
-from Configurate import _log_db_, _dvcs_db_, _op_db_, postgresql_data_base, user, password_for_DB, address_db
+from Configurate import * #_log_db_, _dvcs_db_, _op_db_, postgresql_data_base, user, password_for_DB, address_db
 
 class Data_Bases:
     """
@@ -15,12 +15,14 @@ class Data_Bases:
 
     def __init__(self):
         self.init_postgressql()
+        return
         self.init_devices_DB()
         self.init_log_DB()
         self.init_operations_DB()
         pass
 
     def init_postgressql(self):
+        return
         self.postgresql_connect = psycopg2.connect(database=postgresql_data_base,
                                    user=user,
                                    host=address_db,

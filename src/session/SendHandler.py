@@ -42,9 +42,13 @@ class Send_Handler(Thread):
             queue='client_0',
             no_ack=True
         )
+        l = dir(self.channel)
+        for i in l:
+            print i
 
     def run(self):
         self.channel.start_consuming()
+        print ("stop consumer")
         # создать очереди и привязать ее к точке обмена
         pass
 
@@ -97,6 +101,7 @@ class Send_Handler(Thread):
        # self.handler.connect.list_handler.remove(self.handler)
         self.channel.queue_delete(queue=self.self_queue_name)
         self.sock.close()
+        self.channel.close()
 
         print("reset connect. send heandler")
 

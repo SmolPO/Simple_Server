@@ -72,7 +72,7 @@ TYPE_CODING = dict(utf_8='utf-8', ackii='ackii')
 # для очереди
 localhost = 'localhost'
 address_rbbmq = 'localhost'
-glob_queue_name = "Global_Queue"
+server_global_queue_name = "Global_Queue"
 queue_addr = 'localhost'
 
 # точки обмена
@@ -173,3 +173,8 @@ def is_pps_cmd(cmd):
         return True
     else:
         return False
+
+def is_cmd_for_server(cmd):
+    if cmd // CMD.Commands().step_comands == CMD.Commands.ClnCmd().index_commands:
+        return True
+    return False

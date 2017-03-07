@@ -24,8 +24,6 @@ class Recv_Handler(Thread):
     sock       = None
     _log_ = None
     global_queue = None
-
-
     handler = None
 
     def __init__(self, handler):
@@ -123,7 +121,7 @@ class Recv_Handler(Thread):
 
     def run(self):
 
-        sending_to_queue = glb_queue.to_queue()
+        sending_to_queue = glb_queue.g_to_main_exchange()
         sending_to_queue.next()
 
         while self.is_connect:
@@ -136,27 +134,27 @@ class Recv_Handler(Thread):
                 recvd_msg = self.sock.recv(cnf.SIZE_HEADER)
             except:
                 print ("reset connect")
-                self._close_session()
+                self.is_connect = False
+                continue
+
             if not recvd_msg:
                 print("reset connect")
-                self._close_session()
-                return
+                self.is_connect = False
+                continue
 
             current_message = cnf.from_bytes_get_data_message(bytes(recvd_msg))
 
             if not current_message:
                 print("reset connect")
-                self._close_session()
-                return
-
+                self.is_connect = False
+                continue
             self.add_to_packet_from_main_header(current_message)
-
-            while current_message.size_next > 0:
+            while current_message.size_next > 0 and self.is_connect:
                 current_message = cnf.from_bytes_get_data_message(bytes(self.sock.recv(size_next_mess)))
                 if not current_message or self._check_mess(current_message):
                     print("dont have data or is not good. Close session...\n -->> ")
-                    self._close_session()
-                    return
+                    self.is_connect = False
+                    continue
                 else:
                     pack.append(current_message.data)
 
@@ -166,13 +164,15 @@ class Recv_Handler(Thread):
 
             sending_to_queue.send(self.packet)
             print("Message is receiving ad add to queue....")
-            pass
-        pass  # ошибка: разрыв соединения
+        if not self.is_connect:
+            self._close_session_()
+        else: return
+        pass
 
-    def _close_session(self):
-        print (str(self.handler.connect.list_handler))
-        self.handler.connect.list_handler.pop(self.handler) # TODO как остановить себя?
-        self.handler.send_heandler.close_session()
+    def _close_session_(self):
+       # print (str(self.handler.connect.list_handler))
+        self.handler.send_handler.close_session()
+        self.handler.connect.list_handlers.pop(self.handler.index_handler) # TODO как остановить себя?
         self.sock.close()
 
 

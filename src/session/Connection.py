@@ -16,7 +16,7 @@ class Connect(Thread):
     sock         = None
     connect = None
     channel = None
-    list_handler = {} # список всех подключенных пользователей # ??? добавить maxlen, так как у нас не может быть больше MAX_CONNECT
+    list_handlers = {} # список всех подключенных пользователей # ??? добавить maxlen, так как у нас не может быть больше MAX_CONNECT
     id_clients = None
 
     def __init__(self, app):
@@ -26,8 +26,6 @@ class Connect(Thread):
         # инициализация генераторов
         self.id_clients = count()
         self.id_PP = count()
-        self.id_clients.next()
-        self.id_PP.next()
 
     def run(self):
 
@@ -44,7 +42,7 @@ class Connect(Thread):
                 # Проверка подключения. Первый пакет должен содержать пароль и логин.
                 # Только после этого создается класс Client и весь последующий интерфейс
                 print ("Start...")
-                print (str(self.list_handler))
+                print (str(self.list_handlers))
                 conn, addr = self.sock.accept()
                 print('Connection address:' + str(addr))
                 # TODO проверка подключения
@@ -54,9 +52,7 @@ class Connect(Thread):
                     print ("Плохой клиент!!!")
                     break
                 print("check connect is good")
-                handler = Handler(self, conn, cnf.CLIENT) # тип возвращается функцией аутотификации
-                self.list_handler[next(self.id_clients)] = handler
-                handler.start()
+                self.create_handler(conn)
         finally:
             print ("sock.close....")
             self.sock.close()
@@ -88,8 +84,14 @@ class Connect(Thread):
     def send_list_handler(self, conn):
         c = count()
         next(c)
-        cnt = len(self.list_handler)
-        for k in self.list_handler:
+        cnt = len(self.list_handlers)
+        for k in self.list_handlers:
             if next(c) < cnt:
                 conn.send(1)
             conn.send(k)
+
+    def create_handler(self, conn):
+        index_handler = next(self.id_clients)
+        handler = Handler(self, conn, cnf.CLIENT, index_handler)  # тип возвращается функцией аутотификации
+        self.list_handlers[index_handler] = handler
+        handler.start()

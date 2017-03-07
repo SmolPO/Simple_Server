@@ -9,27 +9,28 @@ import Configurate as cnf
 class Handler(Thread):
 
     # классы
-    recv_heandler = None
-    send_heandler = None
+    recv_handler = None
+    send_handler = None
     connect       = None
     app           = None
     type_         = None
+    index_handler = None
     # соединение
     socket = None
 
 
-    def __init__(self, class_connect, socket, type_):
+    def __init__(self, class_connect, socket, type_, index_handler):
         Thread.__init__(self)
         self.connect = class_connect
         self.socket = socket
         self.type_ = type_
-
-        self.recv_heandler = Recv_Handler(self)
-        self.send_heandler = Send_Handler(self)
+        self.index_handler = index_handler
+        self.recv_handler = Recv_Handler(self)
+        self.send_handler = Send_Handler(self)
 
 
     def run(self):
-        self.send_heandler.start()
-        self.recv_heandler.start()
-
-        self.recv_heandler.join()
+        self.send_handler.start()
+        self.recv_handler.start()
+        self.recv_handler.join()
+        return
