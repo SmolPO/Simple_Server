@@ -94,12 +94,12 @@ DATA_BASE = namedtuple("DATA_BASE_DEVICES", ['name', 'address', 'user', 'passwor
 
 # поля базы данных
 FL_LOG_DB = namedtuple("DATA_BASE_LOG", ['sender', 'msg', 'date'])
-FL_DEVICES_DB = namedtuple("DEVICES_LOG", ['id', 'type', 'position'])
-FL_OPERATION_DB = namedtuple("OPERATIONS_DB", ['msg','verify','date'])
+FL_DEVICES_DB = namedtuple("DEVICES_LOG", ['id', 'type', 'position', 'date'])
+FL_OPERATION_DB = namedtuple("OPERATIONS_DB", ['id', 'sender','message','verify','date'])
 
-_log_db_  = DATA_BASE('log_db',       address_db, user, password_for_DB, ['sender', 'msg', 'date' ])
-_dvcs_db_ = DATA_BASE('devices_db',   address_db, user, password_for_DB, ['id', 'type', 'position'])
-_op_db_   = DATA_BASE('operation_db', address_db, user, password_for_DB, ['msg','verify','date'   ])
+nt_log_db_  = DATA_BASE('log_db', address_db, user, password_for_DB, ['sender', 'msg', 'date'])
+nt_devices_db_ = DATA_BASE('devices_db', address_db, user, password_for_DB, ['id', 'type', 'position', 'date'])
+nt_operation_db_   = DATA_BASE('operation_db', address_db, user, password_for_DB, ['id', 'sender', 'message', 'verify', 'date'])
 
 STATUS = {'ok':0, 'waiting':1, 'not_answer':2}
 

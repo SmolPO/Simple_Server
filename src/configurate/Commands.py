@@ -15,6 +15,7 @@ class Commands:
     101 - 199 - сервер
     201 - 299 - ПП
     301 - 399 - СВ
+    400 - лог, текстовое сообщение на сервер
 
     """
 
@@ -51,6 +52,9 @@ class Commands:
         ON_LIGHT    = 301
         OF_LIGTH    = 302
         PROBLEM     = 303
+
+    class LOG:
+        log = 400
 
 def get_text_message_from_cmd(cmd):
     """

@@ -13,21 +13,13 @@ def authentication(sock):
     if not sock.send(cnf.password):
          return False
     data = sock.recv(BUFFER_SIZE)
-    if not data:
-
-        return False
-
-    return True
-
+    return bool(data)
 
 def main():
     TCP_IP = cnf.server_address
     TCP_PORT = cnf.PORT
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((TCP_IP, TCP_PORT))
-
-
-
     cmd = CMD.OFF_LIGHT
     sender = 1
     date = 1
