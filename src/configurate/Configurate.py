@@ -1,23 +1,9 @@
 # coding=utf-8
 """
-из документа about configurate
-
-1) Первая - заголовочная структура
-    Поля:
-    0) number (пока нет)
-    1) cmd
-    2) sender
-    3) data
-    4) size_next_mess
-    5) общий объем сообщения
-
-Максимальный размер сообщения - 1024 байта
-Все поля сообщения заполняются по 4 байта.
-Один тип сообщений
 
 """
 
-from collections import namedtuple, deque
+from collections import namedtuple
 import Commands as CMD
 
 # типы пользователей

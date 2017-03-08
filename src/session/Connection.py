@@ -2,9 +2,9 @@
 """
 подключение клиентов и устройств к серверу
 """
+import socket
 
 from threading import Thread
-import socket
 from itertools import count
 
 import Configurate as cnf

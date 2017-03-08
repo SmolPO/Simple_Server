@@ -2,21 +2,14 @@
 # интерфейс очереди
 
 from itertools import count
-from threading import Thread
-import logging
 import pika
-
-import Commands as CMD
-import Configurate as cnf
 
 from Configurate import *
 from DataBase import *
 
 id_queue = count()
-
 # генераторы
 def _log_():
-
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         host=address_rbbmq))
     channel = connection.channel()
@@ -26,7 +19,6 @@ def _log_():
         msg = yield
         if not msg:
             continue
-
         channel.basic_publish(
             exchange='',  # точка обмена
             routing_key=log_queue_name,  # имя очереди
@@ -43,10 +35,8 @@ def g_to_main_exchange():
     """
     добавляет в очередь сообщение в байтах
     :param point:
-    :param flag:
     :return:
     """
-
     print("to Global queue...")
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -56,10 +46,8 @@ def g_to_main_exchange():
 
     while True:
         packet = yield
-
         try:
             packet = cnf.to_bytes_from_data_message(packet)
-
             channel.basic_publish(
                 exchange=exchange,  # точка обмена
                 routing_key=server_global_queue_name,  # имя очереди
@@ -147,7 +135,7 @@ class Server_Thread(Thread):
 
 ###--- отправки сообщения в очереди ---###
     # отправка в очередь для ПП
-    def _to_queue_pp_(self, message, rout_key):
+    def _add_to_queue_pp_(self, message, rout_key):
         """
 
         :param message: сообщение
@@ -164,7 +152,7 @@ class Server_Thread(Thread):
         return
 
     # отправка в очередь для клиентов
-    def _to_queue_clients(self, message, rout_key):
+    def _add_to_queue_clients(self, message, rout_key):
         print ("to queue client")
         rout_key = self._get_rout_key_(message)
         name_queue_client = rout_key
@@ -202,7 +190,7 @@ class Server_Thread(Thread):
         cmd = body.cmd
         if cmd // CMD.step_comands == CMD.Commands().ClnCmd().index_commands:
             return CMD.type_receivers['client']
-        elif cmd // CMD.step_comands == CMD.Commands().PPCmdCmd().index_commands:
+        elif cmd // CMD.step_comands == CMD.Commands().PPCmd().index_commands:
             return CMD.type_receivers['pp']
         elif cmd // CMD.step_comands == CMD.Commands().SrvCmd().index_commands:
             return CMD.type_receivers['server']
@@ -223,13 +211,13 @@ class Server_Thread(Thread):
         cmd, rout_key, who_type_receiver = self._get_cmd_(body), self._get_rout_key_(body), self.get_type_receiver(body)
         if who_type_receiver == CMD.type_receivers['client']:
             print ("add to queue client")
-            self._to_queue_clients(body, rout_key)
+            self._add_to_queue_clients(body, rout_key)
             self._basic_ask() # TODO зачем???
             return
 
         elif who_type_receiver == CMD.type_receivers['pp']:
             print ("add to queue pp")
-            self._to_queue_pp_(body, rout_key)
+            self._add_to_queue_pp_(body, rout_key)
             self._basic_ask() # TODO зачем???
             return
 
@@ -241,7 +229,7 @@ class Server_Thread(Thread):
         print ("message is receive....")
         pass
 
-    def close_session(self):
+    def _close_session_(self):
         # TODO остановить свой поток
         self.channel.queue_delete(queue=cnf.server_global_queue_name)
         print ("global queue is remove..")
