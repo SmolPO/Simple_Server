@@ -1,8 +1,11 @@
 # coding=utf-8
 import psycopg2
 from threading import Thread
-from Configurate import nt_log_db_, nt_devices_db_, nt_operation_db_, postgresql_data_base, user, password_for_DB, address_db, FL_DEVICES_DB, FL_OPERATION_DB, FL_LOG_DB, STATUS
-from Commands import step_comands
+from Configurate import nt_log_db_, nt_devices_db_, nt_operation_db_, \
+    postgresql_data_base, user, password_for_DB, address_db, \
+    _FIELDS_DEVICES_DB, _FIELDS_JOURNAL_DB, _FIELDS_LOG_DB, STATUS, TIMEOUT_WAIT_ANSWER, ntuple_data_message
+
+from Commands import step_comands, Commands
 import datetime
 class Data_Bases(Thread):
     """
@@ -13,42 +16,44 @@ class Data_Bases(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.init_postgressql()
+        self.is_checking_db = True
         pass
 
     def run(self):
         """
         проверяет базы данных на неотвечанные сообщения
         проверяет БД раз в t секунд (или может это можно сделать как то не так)
+        лучше добавлять сообщения в какой-то буфер (RabbitMQ) и поставить обработчик,
+        который получает сообщение, только если оно находится там N секунд
         :return:
         """
         ### проверка базы данных операций
         # найти все записи со статусом waiting и определить давность операции
         # если время больше таймаута, то изменить на 'not_answer' и что-нибудь сделать (например, послать ':(' отправителю)))
-        execute = "SELECT * FROM {0} WHERE {1} == {2}".format(
-            nt_operation_db_.name,
-            FL_OPERATION_DB.verify,
-            STATUS['waiting']
-        )
-        self.cursor.execute(execute)
-        TIMEOUT = 10000
-        rows = self.cursor.fetchall()
-        for row in rows:
-      #      if datetime.timedelta(row[4], datetime.datetime.now()) > TIMEOUT:
-             print (str(row))
-             pass
-
-        pass
+        # TODO есть ли такой функционал в RabbitMQ
+        # подключится
 
     def init_postgressql(self):
-        return
+
         self.postgresql_connect = psycopg2.connect(database=postgresql_data_base,
                                    user=user,
                                    host=address_db,
                                    password=password_for_DB)
         self.cursor = self.postgresql_connect.cursor()
-        self.cursor.execute("CREATE TABLE log_db (sender INT, message JSON, date DATE);")
-        self.cursor.execute("CREATE TABLE devices_db (id_device INT, type JSON, location POINT, date DATE);")
-        self.cursor.execute("CREATE TABLE operations_db (id INT, sender INT, message BYTES, verify INT, date DATE);")
+        self._test_()
+
+    def _test_(self):
+        # self._add_to_devices_DB_(message)
+        # self._add_to_log_DB_(message)
+        # self._add_to_operation_DB_(message)
+        # self.cursor.execute("SELECT * FROM log_db")
+        # result = self.cursor.fetchall()
+        # self.cursor.execute("SELECT * FROM devices_db")
+        # result = self.cursor.fetchall()
+        # self.cursor.execute("SELECT * FROM operations_db")
+        # result = self.cursor.fetchall()
+        # print(result)
+        pass
 
     def add_to_datebases(self, message):
         """
@@ -65,10 +70,11 @@ class Data_Bases(Thread):
             # еще какая то логика...
             pass
             return
-        if self.is_update_device(message):
-            self._add_to_operation_DB_(message)
+        elif self.is_update_device(message):
+            self._add_to_devices_DB_(message)
+            self._add_to_journal_DB_(message)
 
-        if self._is_log_message_(message):
+        elif self._is_log_message_(message):
             self._add_to_log_DB_(message)
 
     ### --- Добавить в таблицу --- ###
@@ -77,63 +83,38 @@ class Data_Bases(Thread):
         :param message: (sender, message, date)
         :return:
         """
-        date = self._get_time_()
-        execute = "INSERT INTO {0} ({1}, {2}, {3}) values({4}, {5}, {6})".format(
-            nt_log_db_.name,
-            FL_LOG_DB.sender,
-            FL_LOG_DB.msg,
-            FL_LOG_DB.date,
-            message.sender,
-            message.data, # текст сообщения передается в поле data
-            date
-            )
-        self.cursor.execute(execute)
+        fields = ', '.join(['%s' % x for x in _FIELDS_LOG_DB])
+        list_values = [message.sender, message]
+        values = ', '.join(['%s' % x for x in list_values])
+        query = "INSERT INTO {0} ({1}) VALUES ({2}, '{3}')".format(nt_log_db_.name, fields, values, self._get_time_())
+        self.cursor.execute(query)
         pass
 
     def _add_to_devices_DB_(self, message):
         """
         добавить в базу данных
-        :param message: (id_device, type, location)
+        :param message: (id_device, type, location, date)
         :return:
         """
-        date = self._get_time_()
-        type_device = self._get_type_device_(message)
-        execute = "INSERT INTO {0} ({1}, {2}, {3}, {4}) values({5}, {6}, {7}, {8})".format(
-            nt_devices_db_.name,
-            FL_DEVICES_DB.sender,
-            FL_DEVICES_DB.type,
-            FL_DEVICES_DB.position,
-            FL_DEVICES_DB.date,
-            message.sender,
-            type_device,
-            message.data,
-            date
-            )
-        self.cursor.execute(execute)
+        fields = ', '.join(['%s' % x for x in _FIELDS_DEVICES_DB])
+        list_values = [message.sender, self._get_type_device_(message), self.get_location(message)]
+        values = ', '.join(['%s' % x for x in list_values])
+        query = "INSERT INTO {0} ({1}) VALUES ({2}, '{3}')".format(nt_devices_db_.name, fields, values, self._get_time_())
+        self.cursor.execute(query)
         pass
 
-    def _add_to_operation_DB_(self, message):
+    def _add_to_journal_DB_(self, message):
         """
         :param message: (id, sender, message, verify, date)
         :return:
         """
-        type_device = self._get_type_device_(message)
-        execute = "INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}) values({6}, {7}, {8}, {9}, {10})".format(
-            nt_operation_db_.name,
-            FL_OPERATION_DB.id,
-            FL_OPERATION_DB.sender,
-            FL_OPERATION_DB.message,
-            FL_OPERATION_DB.verify,
-            FL_OPERATION_DB.date,
-            message.id,
-            message.sender,
-            message,
-            STATUS['waiting'],
-            message.data,
-            )
-        self.cursor.execute(execute)
-        pass
 
+        fields = ', '.join(['%s' % x for x in _FIELDS_JOURNAL_DB])
+        list_values = [message.sender, message, STATUS['waiting']]
+        values = ', '.join(['%s' % x for x in list_values])
+        query = "INSERT INTO {0} ({1}) VALUES ({2}, '{3}')".format(nt_operation_db_.name, fields, values, self._get_time_())
+        self.cursor.execute(query)
+        pass
 
     ### --- Получить данные --- ####
     def _get_type_device_(self, message):
@@ -142,10 +123,20 @@ class Data_Bases(Thread):
         :param message:
         :return:
         """
-        return message.cmd // step_comands
+        return "client"
+    #    return message.cmd // step_comands
 
     def _get_time_(self):
-        return datetime.datetime.now()
+         return "2017-03-11-20-45-59"
+        # return str(datetime.datetime.now()).replace(' ', '-')
+
+    def _get_location_(self, message):
+        """
+        пока пусть будет такой способ 0000, где первые два числа - широта, вторые - долгота
+        :param message:
+        :return:
+        """
+        return int(message.date, 10) // 100, int(message.date) % 100
 
     def _get_status_operation_(self, message):
         """
@@ -161,7 +152,9 @@ class Data_Bases(Thread):
         :param message:
         :return:
         """
-        return True
+        if message.cmd == Commands().ClnCmd().CONNECT_CLIENT:
+            return True
+        return False
 
     def _is_log_message_(self, message):
         if message.cmd == 400:
@@ -171,8 +164,8 @@ class Data_Bases(Thread):
 
     ### ---- Запроосы --- ###
     def _is_find_it_message_in_operation_DB_(self, message):
-        execute = "SELECT {0} FROM {1} WHERE {0} = {2}".format(
-            FL_OPERATION_DB.id,
+        execute = "SELECT {0} FROM {1} WHERE {0} = {2} AND ".format(
+            _FIELDS_JOURNAL_DB,
             nt_operation_db_.name,
             message.id
         )
@@ -185,16 +178,5 @@ class Data_Bases(Thread):
         :param id_message: id посылки
         :return:
         """
-        execute = "UPDATE {0} SET {1} = {2} WHERE {2} = {3}".format(
-            nt_devices_db_.name,
-            FL_OPERATION_DB.id,
-            STATUS[status],
-            FL_OPERATION_DB.id,
-            id_message
-        )
+
         pass
-# формировние запроса
-# fields = ', '.join(my_dict.keys())
-# values = ', '.join(['%%(%s)s' % x for x in my_dict])
-# query = 'INSERT INTO some_table (%s) VALUES (%s)' % (fields, values)
-# cursor.execute(query, my_dict)

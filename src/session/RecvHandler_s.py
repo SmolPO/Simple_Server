@@ -170,9 +170,8 @@ class Recv_Handler(Thread):
         pass
 
     def _close_session_(self):
-       # print (str(self.handler.connect.list_handler))
         self.handler.send_handler._close_session_()
-        self.handler.connect.list_handlers.pop(self.handler.index_handler) # TODO как остановить себя?
+        self.handler.connect.list_handlers.pop(self.handler.index_handler)
         self.sock.close()
 
 

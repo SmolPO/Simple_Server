@@ -28,18 +28,15 @@ class Send_Handler(Thread):
         self.sock    = handler.socket or None
         self.type_handler = handler.type_ or None
 
-        name = self._create_name_queue()
-        self.self_queue_name = name
+        self.name_queue = self._create_name_queue()
 
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host='localhost'))
         self.channel = self.connection.channel()
-
-        self.channel.queue_declare(queue=name)
-
+        self.channel.queue_declare(queue=self.name_queue)
         self.channel.basic_consume(
             self.callback,
-            queue='client_0',
+            queue=self.name_queue,
             no_ack=True
         )
 
@@ -79,30 +76,19 @@ class Send_Handler(Thread):
         pass
 
     # внутренние функции
-    def _name_queue(self):
+    def _create_name_queue_(self):
         """
         :return:
         """
-        return 'client_' + str(next(id_queue))
-
-    # def _connect_queue_to_exchage(self, glob_queue_name):
-    #     self.self_queue.chanl.queue_bind(self.self_queue.name, "clients") #self.type_handler)
-    #     return
-
-    def _create_name_queue(self):
-
-        return "client_0" #self.type_handler + "_" + str(next(id_queue))
+        return str(self.handler.type_) + "_" + str(next(id_queue))
 
     def close_session(self):
        # self.handler.connect.list_handler.remove(self.handler)
-        self.channel.queue_delete(queue=self.self_queue_name)
+        self.channel.queue_delete(queue=self.name_queue)
         self.sock.close()
         self.channel.close()
 
         print("reset connect. send heandler")
-
-        # TODO остановить свой поток
-
 
 if __name__ == '__main__':
     snd = Send_Handler()

@@ -44,19 +44,18 @@ class Connect(Thread):
                 print (str(self.list_handlers))
                 conn, addr = self.sock.accept()
                 print('Connection address:' + str(addr))
-                # TODO проверка подключения
-                if self.authentication(conn):
+                if self.authentication_and_create_handler(conn):
                     print ("Это наш клиент!!!")
                 else:
                     print ("Плохой клиент!!!")
                     break
                 print("check connect is good")
-                self.create_handler(conn)
+
         finally:
             print ("sock.close....")
             self.sock.close()
 
-    def authentication(self, conn, next_id=None):
+    def authentication_and_create_handler(self, conn, next_id=None):
         # принимает один байт для подтверждения
         # отправляет следующий номер либо из генератора id_clients, либо из id_PP
 
@@ -64,13 +63,16 @@ class Connect(Thread):
         if not data:
             return False
 
-        if data == 'Cl':  # заглушка, замена аутотификации на сервере. Не забыть изменить!!!
+        if data == cnf.type_receivers['client']:  # заглушка, замена аутотификации на сервере. Не забыть изменить!!!
             print("Client!")
             next_id = self.id_clients.next()
+            self.create_client_handler(conn)
+            return True
 
-        elif data == 'PP':
+        elif data == cnf.type_receivers['pp']:
             print('PP')
             next_id = self.id_PP.next()
+            self.create_PP_handler(conn)
             return True
         elif data:
             print("пришло что-то странное.... ")
@@ -89,8 +91,14 @@ class Connect(Thread):
                 conn.send(1)
             conn.send(k)
 
-    def create_handler(self, conn):
+    def create_client_handler(self, conn):
         index_handler = next(self.id_clients)
-        handler = Handler(self, conn, cnf.CLIENT, index_handler)  # тип возвращается функцией аутотификации
+        handler = Handler(self, conn, cnf.type_receivers['client'], index_handler)  # тип возвращается функцией аутотификации
+        self.list_handlers[index_handler] = handler
+        handler.start()
+
+    def create_PP_handler(self, conn):
+        index_handler = next(self.id_clients)
+        handler = Handler(self, conn, cnf.type_receivers['pp'], index_handler)  # тип возвращается функцией аутотификации
         self.list_handlers[index_handler] = handler
         handler.start()

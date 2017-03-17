@@ -3,8 +3,9 @@
 ON_LIGHT   = 1
 OFF_LIGHT  = 2
 DISCONNECT = 3
-type_receivers = dict(pp=1, client=2, server=3)
+
 step_comands = 100
+
 class Commands:
     """
     команды
@@ -40,6 +41,7 @@ class Commands:
         WINK        = 13
     # with analis
         SET_NEW_MAP = 21
+        CONNECT_CLIENT = 22
 
     class PPCmd:
         index_commands = 2

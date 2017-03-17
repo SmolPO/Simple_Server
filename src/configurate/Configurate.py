@@ -6,10 +6,6 @@
 from collections import namedtuple
 import Commands as CMD
 
-# типы пользователей
-PP = 2
-CLIENT = 1
-
 # размеры полей в байтах
 SIZE_FIELD     = 4 # универсальный размер поля для всех полей
 
@@ -72,22 +68,35 @@ log_queue_name = "Log_Queue"
 postgresql_data_base = "LC"
 
 user = "postgres"
-password_for_DB = "6EQUJ511_1"
+password_for_DB = "postgres"
 address_db = 'localhost'
 
 # подключение к базе данных
 DATA_BASE = namedtuple("DATA_BASE_DEVICES", ['name', 'address', 'user', 'password', 'fields'])
 
 # поля базы данных
-FL_LOG_DB = namedtuple("DATA_BASE_LOG", ['sender', 'msg', 'date'])
-FL_DEVICES_DB = namedtuple("DEVICES_LOG", ['id', 'type', 'position', 'date'])
-FL_OPERATION_DB = namedtuple("OPERATIONS_DB", ['id', 'sender','message','verify','date'])
+#_FIELDS_LOG_DB = namedtuple("DATA_BASE_LOG", ['sender', 'message', 'date'])
+#_FIELDS_DEVICES_DB = namedtuple("DEVICES_LOG", ['id', 'sender', 'type', 'position', 'date'])
+#_FIELDS_JOURNAL_DB = namedtuple("OPERATIONS_DB", ['id', 'sender','message','verify','date'])
+
+# инициализируем поля что бы передать их названия в БД
+#FL_LOG_DB = _FIELDS_LOG_DB('sender', 'msg', 'date')
+#FL_DEVICES_DB = _FIELDS_DEVICES_DB('id', 'sender', 'type', 'position', 'date')
+#FL_OPERATION_DB = _FIELDS_JOURNAL_DB('id', 'sender','message','verify','date')
+
+_FIELDS_LOG_DB = ('sender', 'message', 'date')
+_FIELDS_DEVICES_DB = ('sender', 'type', 'longitude', "latitude", 'date')
+_FIELDS_JOURNAL_DB = ('sender', 'message', 'verify', 'date')
 
 nt_log_db_  = DATA_BASE('log_db', address_db, user, password_for_DB, ['sender', 'msg', 'date'])
 nt_devices_db_ = DATA_BASE('devices_db', address_db, user, password_for_DB, ['id', 'type', 'position', 'date'])
 nt_operation_db_   = DATA_BASE('operation_db', address_db, user, password_for_DB, ['id', 'sender', 'message', 'verify', 'date'])
 
 STATUS = {'ok':0, 'waiting':1, 'not_answer':2}
+
+TIMEOUT_WAIT_ANSWER = 10000
+
+type_receivers = dict(pp=1, client=2, server=3)
 
 def to_bytes_from_data_message(data, size_field=4, end_symbol ='0', charset="utf-8", more=False):
     """
@@ -164,3 +173,4 @@ def is_cmd_for_server(cmd):
     if cmd // CMD.Commands().step_comands == CMD.Commands.ClnCmd().index_commands:
         return True
     return False
+

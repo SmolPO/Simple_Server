@@ -4,6 +4,7 @@
 from itertools import count
 import pika
 
+import Configurate as cnf
 from Configurate import *
 from DataBase import *
 
@@ -27,7 +28,7 @@ def _log_():
     return
 
 # инизиализация логирования  # TODO изучить способы логирования в БД
-                             # TODO кто слушает __log__ ???
+
 g_my_log = _log_()
 g_my_log.next()
 
@@ -108,21 +109,6 @@ class Server_Thread(Thread):
         # подключение к базам данных
         self.DB = Data_Bases()
         self.connection, self.channel = init_rabbitmq()
-        # # создать точки обмена
-        # self.connection = pika.BlockingConnection(pika.ConnectionParameters(
-        #     host='localhost'))
-        # self.channel = self.connection.channel()
-        #
-        # self.channel.queue_declare(queue=server_global_queue_name)
-        # self.channel.queue_declare(queue=log_queue_name)
-        # self.channel.queue_declare(queue='client_0') # TODO жесткое задание имени
-        #
-        # # точки обмена
-        # self.channel.exchange_declare(exchange='clients', type='direct')
-        # self.channel.exchange_declare(exchange='pp'     , type='direct')
-        #
-        # # привязать очередь к точке обмена
-        # self.channel.queue_bind("client_0", "clients")
 
     def run(self):
         self.channel.basic_consume(
@@ -189,11 +175,11 @@ class Server_Thread(Thread):
         """
         cmd = body.cmd
         if cmd // CMD.step_comands == CMD.Commands().ClnCmd().index_commands:
-            return CMD.type_receivers['client']
+            return cnf.type_receivers['client']
         elif cmd // CMD.step_comands == CMD.Commands().PPCmd().index_commands:
-            return CMD.type_receivers['pp']
+            return cnf.type_receivers['pp']
         elif cmd // CMD.step_comands == CMD.Commands().SrvCmd().index_commands:
-            return CMD.type_receivers['server']
+            return cnf.type_receivers['server']
         return 'Did not find type!!!!'
 
 ###--- прочие ---###
@@ -209,29 +195,29 @@ class Server_Thread(Thread):
         self.DB.add_to_datebases(body) # добавление в БД, скрыта вся логика добавления и фиксирования ответа в БД
 
         cmd, rout_key, who_type_receiver = self._get_cmd_(body), self._get_rout_key_(body), self.get_type_receiver(body)
-        if who_type_receiver == CMD.type_receivers['client']:
+        if who_type_receiver == cnf.type_receivers['client']:
             print ("add to queue client")
             self._add_to_queue_clients(body, rout_key)
-            self._basic_ask() # TODO зачем???
+            self._basic_ask()
             return
 
-        elif who_type_receiver == CMD.type_receivers['pp']:
+        elif who_type_receiver == cnf.type_receivers['pp']:
             print ("add to queue pp")
             self._add_to_queue_pp_(body, rout_key)
-            self._basic_ask() # TODO зачем???
+            self._basic_ask()
             return
 
-        elif who_type_receiver == CMD.type_receivers['server']:
+        elif who_type_receiver == cnf.type_receivers['server']:
             print ("for server")
-            self._basic_ask()  # TODO зачем???
+            self._basic_ask()
 
     def _basic_ask(self):
         print ("message is receive....")
         pass
 
     def _close_session_(self):
-        # TODO остановить свой поток
         self.channel.queue_delete(queue=cnf.server_global_queue_name)
+        self.channel.close()
         print ("global queue is remove..")
 
         pass
