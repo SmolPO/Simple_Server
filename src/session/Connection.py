@@ -30,7 +30,7 @@ class Connect(Thread):
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            self.sock.bind(('', cnf.PORT + 1))
+            self.sock.bind(('', cnf.PORT))
             self.sock.listen(cnf.MAX_CONNECT)
         except:
             print ("connect except...")
@@ -48,9 +48,8 @@ class Connect(Thread):
                     print ("Это наш клиент!!!")
                 else:
                     print ("Плохой клиент!!!")
-                    break
+                    continue
                 print("check connect is good")
-
         finally:
             print ("sock.close....")
             self.sock.close()
