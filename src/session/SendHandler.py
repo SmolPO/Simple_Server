@@ -28,7 +28,7 @@ class Send_Handler(Thread):
         self.sock    = handler.socket or None
         self.type_handler = handler.type_ or None
 
-        self.name_queue = self._create_name_queue()
+        self.name_queue = self._create_name_queue_()
 
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host='localhost'))
@@ -91,4 +91,4 @@ class Send_Handler(Thread):
         print("reset connect. send heandler")
 
 if __name__ == '__main__':
-    snd = Send_Handler()
+    snd = Send_Handler(1)
