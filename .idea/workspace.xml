@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd766b64-a48f-43c9-90e4-e3dff8ea1b45" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/SimpleServer.iml" afterPath="$PROJECT_DIR$/.idea/SimpleServer.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test_pp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/configurate/Configurate.py" afterPath="$PROJECT_DIR$/src/configurate/Configurate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/configurate/Commands.py" afterPath="$PROJECT_DIR$/src/configurate/Commands.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/session/Connection.py" afterPath="$PROJECT_DIR$/src/session/Connection.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/session/DataBase.py" afterPath="$PROJECT_DIR$/src/session/DataBase.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/session/GlobalQueue.py" afterPath="$PROJECT_DIR$/src/session/GlobalQueue.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/session/Handler.py" afterPath="$PROJECT_DIR$/src/session/Handler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/session/RecvHandler_s.py" afterPath="$PROJECT_DIR$/src/session/RecvHandler_s.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/session/SendHandler.py" afterPath="$PROJECT_DIR$/src/session/SendHandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test_client.py" afterPath="$PROJECT_DIR$/src/test_client.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,7 +17,10 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Simple_Server$test_client.coverage" NAME="test_client Coverage Results" MODIFIED="1490107621160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/Simple_Server$Server.coverage" NAME="Server Coverage Results" MODIFIED="1490107593394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/Simple_Server$_test_client_.coverage" NAME="_test_client_ Coverage Results" MODIFIED="1490132152920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/Simple_Server$_test_pp_.coverage" NAME="_test_pp_ Coverage Results" MODIFIED="1490132236285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/Simple_Server$test_pp.coverage" NAME="test_pp Coverage Results" MODIFIED="1490132277557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/Simple_Server$Server.coverage" NAME="Server Coverage Results" MODIFIED="1490132049224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -32,33 +28,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Server.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Server.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="10" column="8" lean-forward="false" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+              <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Connection.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/session/Connection.py">
+      <file leaf-file-name="test_pp.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test_pp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="104" column="41" lean-forward="false" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
-              <folding>
-                <element signature="e#66#79#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_client.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test_client.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+            <state relative-caret-position="-571">
+              <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
               <folding>
                 <element signature="e#16#29#0" expanded="true" />
               </folding>
@@ -66,11 +50,45 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urllib.py" pinned="false" current-in-tab="false">
-        <entry file="file://C:/Python27/Lib/urllib.py">
+      <file leaf-file-name="Connection.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/session/Connection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21760">
-              <caret line="1288" column="0" lean-forward="false" selection-start-line="1288" selection-start-column="0" selection-end-line="1288" selection-end-column="0" />
+            <state relative-caret-position="-136">
+              <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+              <folding>
+                <element signature="e#66#79#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Commands.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/configurate/Commands.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_client.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test_client.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding>
+                <element signature="e#16#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Configurate.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/configurate/Configurate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -88,37 +106,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Configurate.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/configurate/Configurate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SendHandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/session/SendHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
+            <state relative-caret-position="575">
               <caret line="92" column="0" lean-forward="false" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataBase.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/session/DataBase.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="935">
-              <caret line="62" column="34" lean-forward="false" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
-              <folding>
-                <marker date="1490103908928" expanded="true" signature="3386:3427" ph="INSERT INTO missing_value... " />
-                <marker date="1490103908928" expanded="true" signature="3955:3996" ph="INSERT INTO missing_value... " />
-                <marker date="1490103908928" expanded="true" signature="4467:4508" ph="INSERT INTO missing_value... " />
-                <marker date="1490103908928" expanded="true" signature="5992:6031" ph="SELECT missi... missing_value" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -147,6 +140,13 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>date</find>
@@ -164,10 +164,15 @@
         <option value="$PROJECT_DIR$/src/session/SendHandler.py" />
         <option value="$PROJECT_DIR$/src/configurate/Configurate.py" />
         <option value="$PROJECT_DIR$/src/session/GlobalQueue.py" />
-        <option value="$PROJECT_DIR$/src/test_client.py" />
-        <option value="$PROJECT_DIR$/src/session/Connection.py" />
         <option value="$PROJECT_DIR$/src/session/Handler.py" />
         <option value="$PROJECT_DIR$/src/session/RecvHandler_s.py" />
+        <option value="$PROJECT_DIR$/_test_pp_.py" />
+        <option value="$PROJECT_DIR$/src/configurate/Commands.py" />
+        <option value="$PROJECT_DIR$/src/session/Connection.py" />
+        <option value="$PROJECT_DIR$/src/_test_pp_.py" />
+        <option value="$PROJECT_DIR$/src/_test_client_.py" />
+        <option value="$PROJECT_DIR$/src/test_pp.py" />
+        <option value="$PROJECT_DIR$/src/test_client.py" />
       </list>
     </option>
   </component>
@@ -271,7 +276,12 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="js.eslint.eslintPackage" value="" />
   </component>
-  <component name="RunManager" selected="Python.test_client">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="B:\Project\Simple_Server\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.test_pp">
     <configuration default="false" name="Server" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -303,7 +313,61 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="SimpleServer" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/test_client.py" />
+      <option name="SCRIPT_NAME" value="B:\Project\Simple_Server\src\test_client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="_test_client_" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="SimpleServer" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="B:\Project\Simple_Server\src\test_client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="_test_pp_" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="SimpleServer" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="B:\Project\Simple_Server\src\test_pp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="test_pp" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="SimpleServer" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/test_pp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -522,14 +586,20 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.Server" />
       <item index="1" class="java.lang.String" itemvalue="Python.test_client" />
+      <item index="2" class="java.lang.String" itemvalue="Python._test_client_" />
+      <item index="3" class="java.lang.String" itemvalue="Python._test_pp_" />
+      <item index="4" class="java.lang.String" itemvalue="Python.test_pp" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.test_client" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Server" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.test_pp" />
+        <item index="1" class="java.lang.String" itemvalue="Python._test_pp_" />
+        <item index="2" class="java.lang.String" itemvalue="Python._test_client_" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Server" />
+        <item index="4" class="java.lang.String" itemvalue="Python.test_client" />
       </list>
     </recent_temporary>
   </component>
@@ -547,31 +617,39 @@
       <option name="presentableId" value="Default" />
       <updated>1481474060406</updated>
     </task>
+    <task id="LOCAL-00001" summary="commit">
+      <created>1490131107111</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1490131107111</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1370" height="744" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26564884" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26564884" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2913257" sideWeight="0.5274809" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.497545" sideWeight="0.5305343" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.4908397" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.497545" sideWeight="0.46946564" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.4908397" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5504732" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.497545" sideWeight="0.47251907" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -580,41 +658,45 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
-          <line>63</line>
+          <line>64</line>
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
-          <line>65</line>
+          <line>66</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
-          <line>47</line>
+          <line>48</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
-          <line>64</line>
+          <line>65</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
-          <line>62</line>
+          <line>63</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
-          <line>67</line>
+          <line>69</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/test_client.py</url>
-          <line>40</line>
+          <line>41</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -629,8 +711,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/test_client.py</url>
-          <line>46</line>
+          <line>47</line>
           <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
+          <line>86</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
+          <line>83</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/session/Connection.py</url>
+          <line>76</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/test_client.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/test_client.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/test_client.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/test_pp.py</url>
+          <line>21</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/test_pp.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="34" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -643,21 +765,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="35" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/session/Connection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1768">
-          <caret line="104" column="41" lean-forward="true" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
-          <folding>
-            <element signature="e#66#79#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test_client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -769,6 +881,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13600">
           <caret line="800" column="0" lean-forward="false" selection-start-line="800" selection-start-column="0" selection-end-line="800" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -968,6 +1081,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="800" column="0" lean-forward="false" selection-start-line="800" selection-start-column="0" selection-end-line="800" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -975,13 +1089,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
           <caret line="239" column="0" lean-forward="false" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/configurate/Commands.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1002,14 +1109,6 @@
             <marker date="1490103908928" expanded="true" signature="4467:4508" ph="INSERT INTO missing_value... " />
             <marker date="1490103908928" expanded="true" signature="5992:6031" ph="SELECT missi... missing_value" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/configurate/Configurate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1038,16 +1137,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/session/Connection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="104" column="41" lean-forward="false" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
-          <folding>
-            <element signature="e#66#79#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/session/Handler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1068,18 +1157,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/session/SendHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
+        <state relative-caret-position="575">
           <caret line="92" column="0" lean-forward="false" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test_client.py">
+    <entry file="file://$PROJECT_DIR$/src/configurate/Commands.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/configurate/Configurate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/session/Connection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
           <folding>
-            <element signature="e#16#29#0" expanded="true" />
+            <element signature="e#66#79#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1087,8 +1192,28 @@
     <entry file="file://$PROJECT_DIR$/src/Server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="10" column="8" lean-forward="false" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+          <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test_pp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-571">
+          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+          <folding>
+            <element signature="e#16#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <element signature="e#16#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

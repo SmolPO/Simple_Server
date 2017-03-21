@@ -8,7 +8,7 @@ from threading import Thread
 from itertools import count
 
 import configurate.Configurate as cnf
-
+import Commands as CMD
 from Handler import Handler
 
 class Connect(Thread):
@@ -16,6 +16,7 @@ class Connect(Thread):
     sock         = None
     connect = None
     channel = None
+    self_ID = 100
     list_handlers = {} # список всех подключенных пользователей # ??? добавить maxlen, так как у нас не может быть больше MAX_CONNECT
     id_clients = None
 
@@ -45,13 +46,13 @@ class Connect(Thread):
                 conn, addr = self.sock.accept()
                 print('Connection address:' + str(addr))
                 self.create_client_handler(conn)
-           #     if self.authentication_and_create_handler(conn):
-           #          print ("Это наш клиент!!!")
-           #      else:
-           #          conn.close()
-           #          print ("Плохой клиент!!!")
-           #          continue
-           #      print("check connect is good")
+                if self.authentication_and_create_handler(conn):
+                    print ("Это наш клиент!!!")
+                else:
+                    conn.close()
+                    print ("Плохой клиент!!!")
+                    continue
+                print("check connect is good")
         finally:
             print ("sock.close....")
             self.sock.close()
@@ -60,28 +61,32 @@ class Connect(Thread):
         # принимает один байт для подтверждения
         # отправляет следующий номер либо из генератора id_clients, либо из id_PP
 
-        data = conn.recv(2)
-        if not data:
+        bytes_message = conn.recv(cnf.SIZE_HEADER)
+        if not bytes_message:
             print("disconnect")
             return False
 
-        if data == cnf.type_receivers['client']:  # заглушка, замена аутотификации на сервере. Не забыть изменить!!!
+        message = cnf.to_data_message_from_bytes_(bytes_message)
+        if message.cmd == CMD.NEW_CLIENT:  # заглушка, замена аутотификации на сервере. Не забыть изменить!!!
             print("Client!")
             next_id = self.id_clients.next()
             self.create_client_handler(conn)
             return True
 
-        elif data == cnf.type_receivers['pp']:
+        elif message.cmd == CMD.NEW_PP:
             print('PP')
             next_id = self.id_PP.next()
             self.create_PP_handler(conn)
             return True
-        elif data:
+
+        elif message.cmd:
             print("пришло что-то странное.... ")
-            print (data)
+            print (message)
             return False
 
-        conn.send(bytes(next_id))
+        answer = cnf.ntuple_data_message(0, CMD.GET_SELF_ID, self.self_ID, message.sender, next_id, 0)
+        bytes_answer = cnf.to_bytes_from_data_message(answer)
+        conn.send(bytes_answer) # ВНИМАНИЕ!!!
         return True
 
     def send_list_handler(self, conn):

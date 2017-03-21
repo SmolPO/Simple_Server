@@ -4,7 +4,6 @@ import socket
 from collections import namedtuple
 from itertools import count
 BUFFER_SIZE = 30
-password = '1'
 
 import configurate.Configurate as cnf
 from configurate import Commands as CMD
@@ -14,9 +13,9 @@ def main():
     TCP_PORT = cnf.PORT
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((TCP_IP, TCP_PORT))
-    cmd = CMD.NEW_CLIENT
+    cmd = CMD.NEW_PP
     sender = 0
-    reciever = 100
+    reciever = 100 # id сервера
     data = 0
     size_next  = 0
 

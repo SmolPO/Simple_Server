@@ -2,6 +2,10 @@
 
 ON_LIGHT   = 1
 OFF_LIGHT  = 2
+NEW_CLIENT = 4
+NEW_PP     = 5
+GET_SELF_ID = 6 # ответ сервера на подключение. Получение ID
+
 DISCONNECT = 3
 
 step_comands = 100
@@ -41,11 +45,11 @@ class Commands:
         WINK        = 13
     # with analis
         SET_NEW_MAP = 21
-        CONNECT_CLIENT = 22
+        CONNECT_NEW_CLIENT = 22
 
     class PPCmd:
         index_commands = 2
-        CONNECT_SV  = 201
+        CONNECT_NEW_PP  = 201
         DIS_CONN_SV = 202
         PROBLEM_SV  = 203
 
