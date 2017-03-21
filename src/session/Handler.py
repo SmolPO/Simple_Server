@@ -21,7 +21,6 @@ class Handler(Thread):
 
     def __init__(self, class_connect, socket, type_, index_handler):
         Thread.__init__(self)
-        print (cnf.address_db)
         self.connect = class_connect
         self.socket = socket
         self.type_ = type_

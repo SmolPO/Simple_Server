@@ -29,7 +29,7 @@ class Send_Handler(Thread):
         self.type_handler = handler.type_ or None
 
         self.name_queue = self._create_name_queue_()
-
+        print ("create queue" + str(self.name_queue))
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host='localhost'))
         self.channel = self.connection.channel()
@@ -52,7 +52,7 @@ class Send_Handler(Thread):
         :param mess: [<байты>]
         :return: true or false
         """
-        print("sending...")
+        print("sending.." + " << -- " + self.name_queue)
         print(str(self.sock.send(mess)))
         return True
 
@@ -62,11 +62,11 @@ class Send_Handler(Thread):
         :return:
 
         """
-        print("callback send handler")
+        print("callback send handler:  " + self.name_queue)
         if not self.send_mess(body):
             # ошибка отправки
             print("reset connect callback")
-            self.close_session()
+            self._close_session_()
             return
         print("callback is ok")
         pass
@@ -80,9 +80,15 @@ class Send_Handler(Thread):
         """
         :return:
         """
-        return str(self.handler.type_) + "_" + str(next(id_queue))
+        if self.type_handler == 1:
+            type_ = "pp"
+        elif self.type_handler == 2:
+            type_ = "client"
+        else:
+            type_ = "none"
+        return type_ + "_" + str(next(id_queue))
 
-    def close_session(self):
+    def _close_session_(self):
        # self.handler.connect.list_handler.remove(self.handler)
         self.channel.queue_delete(queue=self.name_queue)
         self.sock.close()

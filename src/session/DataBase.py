@@ -34,7 +34,7 @@ class Data_Bases(Thread):
         # подключится
 
     def init_postgressql(self):
-
+        return
         self.postgresql_connect = psycopg2.connect(database=postgresql_data_base,
                                    user=user,
                                    host=address_db,
@@ -55,7 +55,7 @@ class Data_Bases(Thread):
         # print(result)
         pass
 
-    def add_to_datebases(self, message):
+    def add_to_databases(self, message):
         """
         проанализировать сообщение и определить в какие базы его нужно добавить
         1) определить, сообщение - ответ или это новая команда
@@ -64,6 +64,7 @@ class Data_Bases(Thread):
         2) определить куда добавлять
         :return:
         """
+        return
         if self._is_find_it_message_in_operation_DB_(message):
             status = self._get_status_operation_(message)
             self._set_verify_for_msg_(message, status)  # TODO не всегда ответное сообщение означает, что команда выполнена!!!

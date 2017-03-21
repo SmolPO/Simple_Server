@@ -7,7 +7,7 @@ import socket
 from threading import Thread
 from itertools import count
 
-import Configurate as cnf
+import configurate.Configurate as cnf
 
 from Handler import Handler
 
@@ -44,12 +44,14 @@ class Connect(Thread):
                 print (str(self.list_handlers))
                 conn, addr = self.sock.accept()
                 print('Connection address:' + str(addr))
-                if self.authentication_and_create_handler(conn):
-                    print ("Это наш клиент!!!")
-                else:
-                    print ("Плохой клиент!!!")
-                    continue
-                print("check connect is good")
+                self.create_client_handler(conn)
+           #     if self.authentication_and_create_handler(conn):
+           #          print ("Это наш клиент!!!")
+           #      else:
+           #          conn.close()
+           #          print ("Плохой клиент!!!")
+           #          continue
+           #      print("check connect is good")
         finally:
             print ("sock.close....")
             self.sock.close()
@@ -60,6 +62,7 @@ class Connect(Thread):
 
         data = conn.recv(2)
         if not data:
+            print("disconnect")
             return False
 
         if data == cnf.type_receivers['client']:  # заглушка, замена аутотификации на сервере. Не забыть изменить!!!
@@ -92,12 +95,14 @@ class Connect(Thread):
 
     def create_client_handler(self, conn):
         index_handler = next(self.id_clients)
+        key_ =  str(index_handler) + "_client"
         handler = Handler(self, conn, cnf.type_receivers['client'], index_handler)  # тип возвращается функцией аутотификации
-        self.list_handlers[index_handler] = handler
+        self.list_handlers[key_] = handler
         handler.start()
 
     def create_PP_handler(self, conn):
         index_handler = next(self.id_clients)
+        key_ = str(index_handler) + "_pp"
         handler = Handler(self, conn, cnf.type_receivers['pp'], index_handler)  # тип возвращается функцией аутотификации
         self.list_handlers[index_handler] = handler
         handler.start()

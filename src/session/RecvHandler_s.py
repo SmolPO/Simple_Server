@@ -13,7 +13,7 @@ import pika
 
 import GlobalQueue as glb_queue
 from GlobalQueue import create_queue
-import Configurate as cnf # экземпляр класса Config
+import configurate.Configurate as cnf # экземпляр класса Config
 
 
 class Recv_Handler(Thread):
@@ -142,7 +142,7 @@ class Recv_Handler(Thread):
                 self.is_connect = False
                 continue
 
-            current_message = cnf.from_bytes_get_data_message(bytes(recvd_msg))
+            current_message = cnf.to_data_message_from_bytes_(bytes(recvd_msg))
 
             if not current_message:
                 print("reset connect")
@@ -150,7 +150,7 @@ class Recv_Handler(Thread):
                 continue
             self.add_to_packet_from_main_header(current_message)
             while current_message.size_next > 0 and self.is_connect:
-                current_message = cnf.from_bytes_get_data_message(bytes(self.sock.recv(size_next_mess)))
+                current_message = cnf.to_data_message_from_bytes_(bytes(self.sock.recv(size_next_mess)))
                 if not current_message or self._check_mess(current_message):
                     print("dont have data or is not good. Close session...\n -->> ")
                     self.is_connect = False
@@ -171,7 +171,7 @@ class Recv_Handler(Thread):
 
     def _close_session_(self):
         self.handler.send_handler._close_session_()
-        self.handler.connect.list_handlers.pop(self.handler.index_handler)
+        self.handler.connect.list_handlers.pop(str(self.handler.index_handler) + "_client") #TODO костыль!!
         self.sock.close()
 
 

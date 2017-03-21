@@ -6,7 +6,7 @@ from itertools import count
 BUFFER_SIZE = 30
 password = '1'
 
-import Configurate as cnf
+import configurate.Configurate as cnf
 from configurate import Commands as CMD
 
 def authentication(sock):
@@ -22,27 +22,21 @@ def main():
     sock.connect((TCP_IP, TCP_PORT))
     cmd = CMD.OFF_LIGHT
     sender = 1
-    date = 1
+    reciever = 0
+    data = 1
     size_next  = 0
 
-    msg = cnf.ntuple_date_message(0, cmd, sender, date, size_next)
-
-    # аутотификация
-    if not authentication(sock):
-        return False
-
-    mess = cnf.to_bytes_from_date_message(msg)
+    msg = cnf.ntuple_data_message(0, cmd, sender, reciever, size_next, data)
+    mess = cnf.to_bytes_from_data_message(msg)
 
     if not sock.send(mess):
         return
 
     while 1:
-        cmd_ = input("Продолжить?\n")
-        if cmd_ == 0:
-            return
+        reciever = input("Продолжить, получатель?\n")
         id_ = msg.id + 1
-        msg = cnf.ntuple_date_message(id_, msg.cmd, msg.sender, msg.date, msg.size_next)
-        mess = cnf.to_bytes_from_date_message(msg)
+        msg = cnf.ntuple_data_message(id_, msg.cmd, msg.sender, reciever, msg.size_next, msg.data)
+        mess = cnf.to_bytes_from_data_message(msg)
 
         sock.send(mess)
         tmp = sock.recv(cnf.SIZE_HEADER) or None
@@ -50,10 +44,12 @@ def main():
             sock.close()
             return
 
-        answer = sock.recv(cnf.SIZE_HEADER)
+        answer = sock.recv(24)
         if not answer:
             sock.close()
             return
+        answer_ = cnf.to_data_message_from_bytes_(answer)
+        print ("received ->" + str(answer_))
 
 if __name__ == '__main__':
     main()

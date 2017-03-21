@@ -4,8 +4,8 @@
 from itertools import count
 import pika
 
-import Configurate as cnf
-from Configurate import *
+import configurate.Configurate as cnf
+from configurate.Configurate import *
 from DataBase import *
 
 id_queue = count()
@@ -25,7 +25,6 @@ def _log_():
             routing_key=log_queue_name,  # имя очереди
             body=msg
         )
-    return
 
 # инизиализация логирования  # TODO изучить способы логирования в БД
 
@@ -128,32 +127,32 @@ class Server_Thread(Thread):
         :param rout_key:
         :return:
         """
-        name_queue_PP = rout_key #ключь и есть название очереди
+        print ("to queue pp")
+        name_queue_pp = "pp" + "_" + str(rout_key)
         print ("to queue pp")
         self.channel.basic_publish(
             exchange=exchange_pp,  # точка обмена
-            routing_key=name_queue_PP,  # имя очереди
+            routing_key=name_queue_pp,  # имя очереди
             body=message
         )
+        print ("->> to queue client" + str(name_queue_pp) + "_" + str(message))
         return
 
     # отправка в очередь для клиентов
     def _add_to_queue_clients(self, message, rout_key):
-        print ("to queue client")
-        rout_key = self._get_rout_key_(message)
-        name_queue_client = rout_key
+
+        name_queue_client = "client" + "_" + str(rout_key)
         self.channel.basic_publish(
             exchange=exchange_cl,  # точка обмена
             routing_key=name_queue_client,  # имя очереди
             body=message
         )
+        print ("->> to queue client" + str(name_queue_client) + "_" + str(message))
         pass
 
 ###--- получение данных из сообщения ---###
     # получение из сообщений команды
     def _get_cmd_(self, message):
-        message = from_bytes_get_data_message(message)
-        print ("return cmd = " + str(message.cmd))
         return message.cmd
 
     def _get_rout_key_(self, mess):
@@ -162,9 +161,8 @@ class Server_Thread(Thread):
         :param mess:
         :return: rout_key из сообщения mess
         """
-        message = from_bytes_get_data_message(mess)
-        reciever = message.recv # TODO возможно здесь будет другой способ получения ключа из recv
-        rout_key = reciever
+        receiver = mess.recv # TODO возможн здесь будет другой способ получения ключа из recv
+        rout_key = receiver
         return rout_key
 
     def get_type_receiver(self, body):
@@ -192,9 +190,9 @@ class Server_Thread(Thread):
         """
         print ("Global queue callback")
         # добавить в базы данных
-        self.DB.add_to_datebases(body) # добавление в БД, скрыта вся логика добавления и фиксирования ответа в БД
-
-        cmd, rout_key, who_type_receiver = self._get_cmd_(body), self._get_rout_key_(body), self.get_type_receiver(body)
+        self.DB.add_to_databases(body) # добавление в БД, скрыта вся логика добавления и фиксирования ответа в БД
+        message = cnf.to_data_message_from_bytes_(body)
+        cmd, rout_key, who_type_receiver = self._get_cmd_(message), self._get_rout_key_(message), self.get_type_receiver(message)
         if who_type_receiver == cnf.type_receivers['client']:
             print ("add to queue client")
             self._add_to_queue_clients(body, rout_key)

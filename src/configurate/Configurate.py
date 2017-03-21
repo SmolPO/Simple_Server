@@ -15,7 +15,7 @@ SIZE_SENDER    = 4 # размер поля SENDER
 SIZE_RECV      = 4 # размер поля для RECEIVER
 SIZE_DATA      = 4 # размер под DATA в ЗС
 SIZE_NEXT_PACK = 4 # сколько байт в конце посылки отвечают за размер следующего сообщения
-COUNT_FIELDS   = 4 # cmd, sender, data, size_next_mess
+COUNT_FIELDS   = 6 # cmd, sender, data, size_next_mess
 
 SIZE_HEADER    = SIZE_ID + SIZE_CMD + SIZE_SENDER + SIZE_RECV + SIZE_DATA + SIZE_NEXT_PACK # размер первого сообщения
 MIN_SIZE_MESS  = SIZE_FIELD * COUNT_FIELDS
@@ -45,7 +45,7 @@ ERR_     = 3
 
 # константы для соединения (продублированы в globals_variables как поля класа)
 PORT = 27000
-server_address = 'localhost'
+server_address = "5.145.160.40"
 MAX_CONNECT = 10
 
 # кодировка сообщений
@@ -122,7 +122,7 @@ def to_bytes_from_data_message(data, size_field=4, end_symbol ='0', charset="utf
     return bytes(id_ + cmd_ + sender_ + receiver_ + size_next_mess_ + data_)
 
 
-def from_bytes_get_data_message(by_data, size_field=4, charset="utf-8"):
+def to_data_message_from_bytes_(by_data, size_field=4, charset="utf-8"):
     """
      проверяет:
      - длинна больше минимально возможной
