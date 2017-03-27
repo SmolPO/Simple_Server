@@ -10,7 +10,7 @@ import socket
 import pika
 from threading import Thread
 
-import Configurate as cnf
+import configurate.Configurate as cnf
 import GlobalQueue as glb_queue
 
 from GlobalQueue import id_queue
@@ -24,16 +24,19 @@ class Send_Handler(Thread):
     def __init__(self, handler):
         Thread.__init__(self)
 
-        self.handler = handler or None
-        self.sock    = handler.socket or None
-        self.type_handler = handler.type_ or None
+        self.handler = handler
+        self.sock    = handler.socket
+        self.type_handler = handler.type_
 
         self.name_queue = self._create_name_queue_()
-        print ("create queue" + str(self.name_queue))
+        print ("create queue:  " + str(self.name_queue))
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host='localhost'))
+
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue=self.name_queue)
+        exchange = "clients" if self.type_handler == 2 else "pp"
+        self.channel.queue_bind(self.name_queue, exchange)
         self.channel.basic_consume(
             self.callback,
             queue=self.name_queue,
@@ -86,15 +89,11 @@ class Send_Handler(Thread):
             type_ = "client"
         else:
             type_ = "none"
-        return type_ + "_" + str(next(id_queue))
+        return type_ + "_" + str(self.handler.index_handler)
 
     def _close_session_(self):
-       # self.handler.connect.list_handler.remove(self.handler)
         self.channel.queue_delete(queue=self.name_queue)
         self.sock.close()
         self.channel.close()
+        print("reset connect. send heandler " + str(self.name_queue))
 
-        print("reset connect. send heandler")
-
-if __name__ == '__main__':
-    snd = Send_Handler(1)

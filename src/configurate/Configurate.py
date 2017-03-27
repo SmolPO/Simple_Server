@@ -141,6 +141,7 @@ def to_data_message_from_bytes_(by_data, size_field=4, charset="utf-8"):
 
  #       raise Exception("Размер меньше размера минимального размера сообщения")
 
+
     str_res = str(by_data.decode(charset))
 
     id_        = int(str_res[id_slise])
@@ -150,8 +151,36 @@ def to_data_message_from_bytes_(by_data, size_field=4, charset="utf-8"):
     size_next_ = int(str_res[size_next_mess_slice])
     data_      = int(str_res[data_slice])
 
-
     return ntuple_data_message(id_, cmd_, sender_, receiver_, size_next_, data_)
+
+def to_data_message_from_bytes_2(by_data, size_field=SIZE_FIELD):
+    """
+
+    :param by_data:
+    :param size_field:
+    :return:
+    """
+    bytes_ = bytearray(by_data)
+    s = size_field
+    to_struct = [bytes_[s * i] * 1000 +
+                 bytes_[s * i + 1] * 100 +
+                 bytes_[s * i + 2] * 10 +
+                 bytes_[s * i + 3]
+                 for i in range(COUNT_FIELDS)]
+
+    return ntuple_data_message(*to_struct)
+
+def to_bytes_from_data_message_2(data):
+    to_bytes = bytearray()
+    weights = [10**i for i in range(SIZE_FIELD)]
+    weights.reverse()
+    for field in data:  # поля
+        for w in weights:
+            to_bytes.append(field // w)
+            field -= field // w * w
+
+    return to_bytes
+
 
 def init_ntuple_data_message():
     return ntuple_data_message(None, None, None, None, None, None)

@@ -120,7 +120,6 @@ class Recv_Handler(Thread):
         return True
 
     def run(self):
-        print (cnf.address_db)
         sending_to_queue = glb_queue.g_to_main_exchange()
         sending_to_queue.next()
 
@@ -171,7 +170,8 @@ class Recv_Handler(Thread):
 
     def _close_session_(self):
         self.handler.send_handler._close_session_()
-        self.handler.connect.list_handlers.pop(str(self.handler.index_handler) + "_client") #TODO костыль!!
+        type_ = "pp_" if self.typr_handler == 1 else "client_"
+        self.handler.connect.list_handlers.pop(type_ + str(self.handler.index_handler)) #TODO костыль!!
         self.sock.close()
 
 

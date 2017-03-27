@@ -23,6 +23,7 @@ class Application(Thread):
         self.connect_class.start()
 
         self.connect_class.join()
+        return
 
 if __name__ == "__main__":
     App = Application()

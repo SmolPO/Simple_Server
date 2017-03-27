@@ -13,15 +13,16 @@ def main():
     TCP_IP = cnf.server_address
     TCP_PORT = cnf.PORT
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((TCP_IP, TCP_PORT))
-    cmd = CMD.NEW_CLIENT
-    sender = 0
-    reciever = 100
-    data = 0
-    size_next  = 0
+    sock.connect((cnf.localhost, TCP_PORT))
+    id = 1111
+    cmd = 2222
+    sender = 3333
+    receiver = 4444
+    data = 6666
+    size_next = 5555
 
-    msg = cnf.ntuple_data_message(0, cmd, sender, reciever, size_next, data)
-    mess = cnf.to_bytes_from_data_message(msg)
+    msg = cnf.ntuple_data_message(id, cmd, sender, receiver, size_next, data)
+    mess = cnf.to_bytes_from_data_message_2(msg)
 
     if not sock.send(mess):
         return
@@ -30,13 +31,13 @@ def main():
     if not answer:
         print ("нет ответа")
         return
-    message = cnf.to_data_message_from_bytes_(answer)
+    message = cnf.to_data_message_from_bytes_2(answer)
     self_id = message.data
 
     while 1:
-        reciever = input("Продолжить, получатель?\n")
+        receiver = input("Продолжить, получатель?\n")
         id_ = msg.id + 1
-        msg = cnf.ntuple_data_message(id_, msg.cmd, msg.sender, reciever, msg.size_next, msg.data)
+        msg = cnf.ntuple_data_message(id_, CMD.ON_LIGHT, self_id, receiver, msg.size_next, msg.data)
         mess = cnf.to_bytes_from_data_message(msg)
 
         sock.send(mess)

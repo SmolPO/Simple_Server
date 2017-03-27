@@ -22,11 +22,11 @@ class Connect(Thread):
 
     def __init__(self, app):
         Thread.__init__(self)
-        self.app         = app
+        self.app = app
 
         # инициализация генераторов
-        self.id_clients = count()
-        self.id_PP = count()
+        self.id_clients = count(1) # начальное значение
+        self.id_PP = count(101)
 
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -35,7 +35,7 @@ class Connect(Thread):
             self.sock.listen(cnf.MAX_CONNECT)
         except:
             print ("connect except...")
-            return
+            return False
 
         try:
              while 1:
@@ -45,7 +45,6 @@ class Connect(Thread):
                 print (str(self.list_handlers))
                 conn, addr = self.sock.accept()
                 print('Connection address:' + str(addr))
-                self.create_client_handler(conn)
                 if self.authentication_and_create_handler(conn):
                     print ("Это наш клиент!!!")
                 else:
@@ -60,33 +59,33 @@ class Connect(Thread):
     def authentication_and_create_handler(self, conn, next_id=None):
         # принимает один байт для подтверждения
         # отправляет следующий номер либо из генератора id_clients, либо из id_PP
-
         bytes_message = conn.recv(cnf.SIZE_HEADER)
         if not bytes_message:
             print("disconnect")
             return False
+        try:
+            message = cnf.to_data_message_from_bytes_2(bytes_message)
+        except:
+            return False
 
-        message = cnf.to_data_message_from_bytes_(bytes_message)
-        if message.cmd == CMD.NEW_CLIENT:  # заглушка, замена аутотификации на сервере. Не забыть изменить!!!
-            print("Client!")
-            next_id = self.id_clients.next()
-            self.create_client_handler(conn)
-            return True
-
-        elif message.cmd == CMD.NEW_PP:
-            print('PP')
-            next_id = self.id_PP.next()
-            self.create_PP_handler(conn)
-            return True
-
-        elif message.cmd:
+        if message.cmd:
             print("пришло что-то странное.... ")
             print (message)
             return False
 
-        answer = cnf.ntuple_data_message(0, CMD.GET_SELF_ID, self.self_ID, message.sender, next_id, 0)
-        bytes_answer = cnf.to_bytes_from_data_message(answer)
-        conn.send(bytes_answer) # ВНИМАНИЕ!!!
+        elif message.cmd == CMD.NEW_CLIENT:  # заглушка, замена аутотификации на сервере. Не забыть изменить!!!
+            print("Client!")
+            next_id = self.id_clients.next()
+            self.create_client_handler(conn, next_id)
+
+        elif message.cmd == CMD.NEW_PP:
+            print('PP')
+            next_id = self.id_PP.next()
+            self.create_PP_handler(conn, next_id)
+
+        answer = cnf.ntuple_data_message(0, CMD.GET_SELF_ID, self.self_ID, message.sender, 0, next_id)
+        bytes_answer = cnf.to_bytes_from_data_message_2(answer)
+        conn.send(bytes_answer) # TODO !!! ВНИМАНИЕ!!!
         return True
 
     def send_list_handler(self, conn):
@@ -98,16 +97,14 @@ class Connect(Thread):
                 conn.send(1)
             conn.send(k)
 
-    def create_client_handler(self, conn):
-        index_handler = next(self.id_clients)
-        key_ =  str(index_handler) + "_client"
-        handler = Handler(self, conn, cnf.type_receivers['client'], index_handler)  # тип возвращается функцией аутотификации
+    def create_client_handler(self, conn, id_client):
+        key_ =  "client_" + str(id_client)
+        handler = Handler(self, conn, cnf.type_receivers['client'], id_client)  # тип возвращается функцией аутотификации
         self.list_handlers[key_] = handler
         handler.start()
 
-    def create_PP_handler(self, conn):
-        index_handler = next(self.id_clients)
-        key_ = str(index_handler) + "_pp"
-        handler = Handler(self, conn, cnf.type_receivers['pp'], index_handler)  # тип возвращается функцией аутотификации
-        self.list_handlers[index_handler] = handler
+    def create_PP_handler(self, conn, id_pp):
+        key_ = str(id_pp) + "_pp"
+        handler = Handler(self, conn, cnf.type_receivers['pp'], id_pp)  # тип возвращается функцией аутотификации
+        self.list_handlers[key_] = handler
         handler.start()

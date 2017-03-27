@@ -29,7 +29,7 @@ def _log_():
 # инизиализация логирования  # TODO изучить способы логирования в БД
 
 g_my_log = _log_()
-g_my_log.next()
+next(g_my_log)
 
 def g_to_main_exchange():
     """
@@ -37,7 +37,7 @@ def g_to_main_exchange():
     :param point:
     :return:
     """
-    print("to Global queue...")
+    print("init g_to_main_exchange")
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
     channel = connection.channel()
@@ -87,10 +87,8 @@ def init_rabbitmq(address=cnf.queue_addr):
     channel.exchange_declare(exchange=exchange_pp, type='direct')
 
     # для отладки TODO
-    channel.queue_declare(queue="client_0")
     channel.queue_declare(queue=cnf.server_global_queue_name)
     channel.queue_declare(queue=cnf.log_queue_name)
-    channel.queue_bind("client_0", "clients")
 
     return connection, channel
 
@@ -147,7 +145,7 @@ class Server_Thread(Thread):
             routing_key=name_queue_client,  # имя очереди
             body=message
         )
-        print ("->> to queue client" + str(name_queue_client) + "_" + str(message))
+        print ("->> to queue client: " + str(name_queue_client) + " " + str(message))
         pass
 
 ###--- получение данных из сообщения ---###
@@ -171,14 +169,15 @@ class Server_Thread(Thread):
         :param cmd:
         :return:
         """
-        cmd = body.cmd
-        if cmd // CMD.step_comands == CMD.Commands().ClnCmd().index_commands:
-            return cnf.type_receivers['client']
-        elif cmd // CMD.step_comands == CMD.Commands().PPCmd().index_commands:
-            return cnf.type_receivers['pp']
-        elif cmd // CMD.step_comands == CMD.Commands().SrvCmd().index_commands:
-            return cnf.type_receivers['server']
-        return 'Did not find type!!!!'
+        return cnf.type_receivers['pp'] if body.recv > 100 else cnf.type_receivers['client']
+        # cmd = body.cmd
+        # if cmd // CMD.step_comands == CMD.Commands().ClnCmd().index_commands:
+        #     return cnf.type_receivers['client']
+        # elif cmd // CMD.step_comands == CMD.Commands().PPCmd().index_commands:
+        #     return cnf.type_receivers['pp']
+        # elif cmd // CMD.step_comands == CMD.Commands().SrvCmd().index_commands:
+        #     return cnf.type_receivers['server']
+        # return 'Did not find type!!!!'
 
 ###--- прочие ---###
     def _callback_(self, ch, method, properties, body):

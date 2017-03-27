@@ -15,11 +15,11 @@ def main():
     sock.connect((TCP_IP, TCP_PORT))
     cmd = CMD.NEW_PP
     sender = 0
-    reciever = 100 # id сервера
+    receiver = 100 # id сервера
     data = 0
-    size_next  = 0
+    size_next = 0
 
-    msg = cnf.ntuple_data_message(0, cmd, sender, reciever, size_next, data)
+    msg = cnf.ntuple_data_message(0, cmd, sender, receiver, size_next, data)
     mess = cnf.to_bytes_from_data_message(msg)
 
     if not sock.send(mess):
@@ -33,9 +33,9 @@ def main():
     self_id = message.data
 
     while 1:
-        reciever = input("Продолжить, получатель?\n")
+        receiver = input("Продолжить, получатель?\n")
         id_ = msg.id + 1
-        msg = cnf.ntuple_data_message(id_, msg.cmd, msg.sender, reciever, msg.size_next, msg.data)
+        msg = cnf.ntuple_data_message(id_, CMD.ON_LIGHT, self_id, receiver, msg.size_next, msg.data)
         mess = cnf.to_bytes_from_data_message(msg)
 
         sock.send(mess)
